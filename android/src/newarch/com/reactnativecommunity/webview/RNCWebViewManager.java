@@ -27,11 +27,17 @@ import com.reactnativecommunity.webview.events.TopRenderProcessGoneEvent;
 import com.reactnativecommunity.webview.events.TopShouldStartLoadWithRequestEvent;
 
 import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+
+import androidx.webkit.ProxyConfig;
+import androidx.webkit.ProxyController;
+import androidx.webkit.WebViewFeature;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 @ReactModule(name = RNCWebViewManagerImpl.NAME)
 public class RNCWebViewManager extends ViewGroupManager<RNCWebViewWrapper>
@@ -432,6 +438,18 @@ public class RNCWebViewManager extends ViewGroupManager<RNCWebViewWrapper>
     @Override
     public void setFraudulentWebsiteWarningEnabled(RNCWebViewWrapper view, boolean value) {}
     /* !iOS PROPS - no implemented here */
+
+    @Override
+    @ReactProp(name = "proxy")
+    public void setProxy(RNCWebViewWrapper view, @Nullable String proxyUrl) {
+        mRNCWebViewManagerImpl.setProxy(view, proxyUrl);
+    }
+
+    @Override
+    @ReactProp(name = "outboundTargetIp")
+    public void setOutboundTargetIp(RNCWebViewWrapper view, @Nullable String ip) {
+        mRNCWebViewManagerImpl.setOutboundTargetIp(view, ip);
+    }
 
     @Override
     @ReactProp(name = "userAgent")

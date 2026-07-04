@@ -17,6 +17,8 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
+import androidx.webkit.ProxyConfig
+import androidx.webkit.ProxyController
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.common.MapBuilder
@@ -720,5 +722,20 @@ class RNCWebViewManagerImpl(private val newArch: Boolean = false) {
         if (WebViewFeature.isFeatureSupported(WebViewFeature.PAYMENT_REQUEST)) {
             WebSettingsCompat.setPaymentRequestEnabled(view.settings, enabled)
         }
+    }
+
+    fun setProxy(viewWrapper: RNCWebViewWrapper, proxyUrl: String?) {
+        if (proxyUrl != null && WebViewFeature.isFeatureSupported(WebViewFeature.PROXY_OVERRIDE)) {
+            var formattedProxy = proxyUrl
+            if (!formattedProxy.startsWith("socks://") && !formattedProxy.startsWith("http://") && !formattedProxy.startsWith("https://")) {
+                formattedProxy = "socks://$formattedProxy"
+            }
+            val proxyConfig = ProxyConfig.Builder().addProxyRule(formattedProxy).addDirect().build()
+            ProxyController.getInstance().setProxyOverride(proxyConfig, { r: Runnable -> r.run() }, Runnable { })
+        }
+    }
+
+    fun setOutboundTargetIp(viewWrapper: RNCWebViewWrapper, ip: String?) {
+        viewWrapper.webView.outboundTargetIp = ip
     }
 }

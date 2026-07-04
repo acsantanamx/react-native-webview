@@ -27,6 +27,7 @@ import OpenWindow from './examples/OpenWindow';
 import SuppressMenuItems from './examples/Suppress';
 import ClearData from './examples/ClearData';
 import SslError from './examples/SslError';
+import ProxyTest from './examples/ProxyTest';
 
 const TESTS = {
   Messaging: {
@@ -165,7 +166,15 @@ const TESTS = {
       return <SslError />;
     },
   },
-};
+  ProxyTest: {
+    title: 'ProxyTest',
+    testId: 'proxy',
+    description: 'Proxy connection test via socks://10.0.2.2:1080',
+    render() {
+      return <ProxyTest />;
+    },
+  },
+  };
 
 const styles = StyleSheet.create({
   container: {
@@ -335,6 +344,13 @@ export default function App() {
           title="SslError"
           onPress={() => changeTest('SslError')}
         />
+        {Platform.OS === 'android' && (
+          <Button
+            testID="testType_proxy"
+            title="Proxy"
+            onPress={() => changeTest('ProxyTest')}
+          />
+        )}
       </View>
 
       {restarting ? null : (

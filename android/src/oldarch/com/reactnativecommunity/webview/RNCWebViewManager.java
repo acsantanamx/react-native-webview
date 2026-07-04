@@ -23,6 +23,9 @@ import com.reactnativecommunity.webview.events.TopRenderProcessGoneEvent;
 import com.reactnativecommunity.webview.events.TopShouldStartLoadWithRequestEvent;
 
 import java.util.Map;
+import androidx.webkit.ProxyConfig;
+import androidx.webkit.ProxyController;
+import androidx.webkit.WebViewFeature;
 
 public class RNCWebViewManager extends ViewGroupManager<RNCWebViewWrapper> {
 
@@ -277,6 +280,16 @@ public class RNCWebViewManager extends ViewGroupManager<RNCWebViewWrapper> {
     @ReactProp(name = "paymentRequestEnabled")
     public void setPaymentRequestEnabled(RNCWebViewWrapper view, boolean value) {
         mRNCWebViewManagerImpl.setPaymentRequestEnabled(view, value);
+    }
+
+    @ReactProp(name = "proxy")
+    public void setProxy(RNCWebViewWrapper view, @Nullable String proxyUrl) {
+        mRNCWebViewManagerImpl.setProxy(view, proxyUrl);
+    }
+
+    @ReactProp(name = "outboundTargetIp")
+    public void setOutboundTargetIp(RNCWebViewWrapper view, @Nullable String ip) {
+        mRNCWebViewManagerImpl.setOutboundTargetIp(view, ip);
     }
 
     @Override

@@ -947,6 +947,9 @@ export interface MacOSWebViewProps extends WebViewSharedProps {
 }
 
 export interface AndroidWebViewProps extends WebViewSharedProps {
+  proxy?: string;
+  outboundTargetIp?: string;
+
   onNavigationStateChange?: (event: WebViewNavigation) => void;
   onContentSizeChange?: (event: WebViewEvent) => void;
 
