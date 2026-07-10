@@ -390,12 +390,16 @@ class RNCWebViewManagerImpl(private val newArch: Boolean = false) {
             if (source.hasKey("html")) {
                 val html = source.getString("html")
                 val baseUrl = if (source.hasKey("baseUrl")) source.getString("baseUrl") else ""
+                val referrerUrl = if (source.hasKey("referrer")) source.getString("referrerUrl") else null
+
+                Log.w(TAG, "[loadDataWithBaseURL] htmlLen=${html?.length} | baseUrl=$baseUrl | referrer=$referrer")
+
                 view.loadDataWithBaseURL(
                     baseUrl,
                     html!!,
                     HTML_MIME_TYPE,
                     HTML_ENCODING,
-                    null
+                    referrerUrl
                 )
                 return
             }
